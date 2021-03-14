@@ -121,7 +121,7 @@ fn fetch_blocking(request: &Request) -> Result<Response, String> {
     Ok(response)
 }
 
-pub struct EpiHttp;
+pub struct EpiHttp{}
 
 #[cfg(feature = "native")]
 impl epi::backend::Http for EpiHttp {
