@@ -1,3 +1,7 @@
+[![Latest version](https://img.shields.io/crates/v/epi_http.svg)](https://crates.io/crates/egui_vulkano_backend)
+[![Documentation](https://docs.rs/epi_http/badge.svg)](https://docs.rs/egui_vulkano_backend)
+![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Apache](https://img.shields.io/badge/license-Apache-blue.svg)
 [![egui version: 0.10.0](https://img.shields.io/badge/egui%20version-0.10.0-orange)](https://docs.rs/egui/0.10.0/egui/index.html)
 # epi_http 
 epi::http implementation this enables all of egui platform have http download capability
