@@ -1,17 +1,18 @@
-#[cfg(any(feature = "web",feature = "native"))]
+
 use epi::http::{Request, Response};
-#[cfg(feature = "web")]
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::JsValue;
+#[cfg(not(target_arch = "wasm32"))]
 use epi::http::Error;
 
-#[cfg(feature = "web")]
+#[cfg(target_arch = "wasm32")]
 pub async fn fetch_async(request: &Request) -> Result<Response, String> {
     fetch_jsvalue(request)
         .await
         .map_err(|err| err.as_string().unwrap_or_default())
 }
 
-#[cfg(feature = "web")]
+#[cfg(target_arch = "wasm32")]
 async fn fetch_jsvalue(request: &Request) -> Result<Response, JsValue> {
     let Request { method, url, body } = request;
 
@@ -71,7 +72,7 @@ async fn fetch_jsvalue(request: &Request) -> Result<Response, JsValue> {
     })
 }
 
-#[cfg(feature = "native")]
+#[cfg(not(target_arch = "wasm32"))]
 fn fetch_blocking(request: &Request) -> Result<Response, String> {
     let Request { method, url, body } = request;
 
@@ -122,8 +123,7 @@ fn fetch_blocking(request: &Request) -> Result<Response, String> {
 }
 
 pub struct EpiHttp{}
-
-#[cfg(feature = "native")]
+#[cfg(not(target_arch = "wasm32"))]
 impl epi::backend::Http for EpiHttp {
     fn fetch_dyn(
         &self,
@@ -137,7 +137,7 @@ impl epi::backend::Http for EpiHttp {
     }
 }
 
-#[cfg(feature = "web")]
+#[cfg(target_arch = "wasm32")]
 impl epi::backend::Http for EpiHttp {
     fn fetch_dyn(
         &self,
@@ -151,7 +151,7 @@ impl epi::backend::Http for EpiHttp {
     }
 }
 
-#[cfg(feature = "web")]
+#[cfg(target_arch = "wasm32")]
 pub fn spawn_future<F>(future: F)
 where
     F: std::future::Future<Output = ()> + 'static,

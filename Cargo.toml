@@ -5,23 +5,16 @@ authors = ["t18b219k <t18b219k@mail.cc.niigata-u.ac.jp>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[features]
-native=["epi/http","ureq"]
-web=["epi/http",
-    "web-sys/Headers",
-    "wasm-bindgen-futures",
-    "wasm-bindgen",
-    "js-sys",
-"web-sys/Request",
-"web-sys/RequestInit",
-"web-sys/RequestMode",
-"web-sys/Response",
-"web-sys/Window"]
 [dependencies]
-epi="0.10.0"
-ureq={version="2.0",optional=true}
-web-sys={version="0.3",optional=true}
-wasm-bindgen = {version="0.2",optional=true}
-wasm-bindgen-futures = {version="0.4",optional=true}
-js-sys = {version="0.3",optional=true}
+epi={version="0.10.0",features=["http"]}
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web-sys={version="0.3",features=["Headers","Request","RequestInit", "RequestMode","Response","Window"]}
+wasm-bindgen = {version="0.2"}
+wasm-bindgen-futures = {version="0.4"}
+js-sys = {version="0.3"}
+
+[target.'cfg(not(target_arch="wasm32"))'.dependencies]
+ureq={version="2.0"}
+
+
 
